@@ -1,0 +1,133 @@
+[0m16:38:35.368179 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1072dcda0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x107420530>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x107420290>]}
+
+
+============================== 16:38:35.371694 | 680a0dfc-6d7f-40bb-a230-90d48cba2bf0 ==============================
+[0m16:38:35.371694 [info ] [MainThread]: Running with dbt=1.11.8
+[0m16:38:35.372026 [debug] [MainThread]: running dbt with arguments {'invocation_command': 'dbt init', 'indirect_selection': 'eager', 'warn_error': 'None', 'use_experimental_parser': 'False', 'introspect': 'True', 'log_path': 'logs', 'cache_selected_only': 'False', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'write_json': 'True', 'log_cache_events': 'False', 'no_print': 'None', 'fail_fast': 'False', 'debug': 'False', 'static_parser': 'True', 'printer_width': '80', 'use_colors': 'True', 'empty': 'None', 'version_check': 'True', 'send_anonymous_usage_stats': 'True', 'target_path': 'None', 'partial_parse': 'True', 'quiet': 'False', 'log_format': 'default', 'profiles_dir': '/Users/shahanahmed/.dbt'}
+[0m16:38:35.380221 [info ] [MainThread]: Creating dbt configuration folder at /Users/shahanahmed/.dbt
+[0m16:38:43.137225 [debug] [MainThread]: Starter project path: /Users/shahanahmed/Desktop/tutorful_task/.venv/lib/python3.12/site-packages/dbt/include/starter_project
+[0m16:38:43.145325 [info ] [MainThread]: 
+Your new dbt project "tutorful" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m16:38:43.145833 [info ] [MainThread]: Setting up your profile.
+[0m16:39:40.033715 [info ] [MainThread]: Profile tutorful written to /Users/shahanahmed/.dbt/profiles.yml using target's profile_template.yml and your supplied values. Run 'dbt debug' to validate the connection.
+[0m16:39:40.065157 [debug] [MainThread]: Resource report: {"command_name": "init", "command_success": true, "command_wall_clock_time": 64.74118, "process_in_blocks": "0", "process_kernel_time": 0.37534, "process_mem_max_rss": "193757184", "process_out_blocks": "0", "process_user_time": 1.435972}
+[0m16:39:40.068380 [debug] [MainThread]: Command `dbt init` succeeded at 16:39:40.068086 after 64.75 seconds
+[0m16:39:40.069667 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x11f8df4a0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x11b406c00>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1283d1a30>]}
+[0m16:39:40.070464 [debug] [MainThread]: Flushing usage events
+[0m16:39:40.480786 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m16:39:45.759542 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108ded550>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1094bbe00>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1094e82c0>]}
+
+
+============================== 16:39:45.762669 | 10fe845b-623e-47b5-b5c9-fc3c585e2278 ==============================
+[0m16:39:45.762669 [info ] [MainThread]: Running with dbt=1.11.8
+[0m16:39:45.762996 [debug] [MainThread]: running dbt with arguments {'empty': 'None', 'send_anonymous_usage_stats': 'True', 'write_json': 'True', 'debug': 'False', 'use_experimental_parser': 'False', 'log_cache_events': 'False', 'use_colors': 'True', 'printer_width': '80', 'partial_parse': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'quiet': 'False', 'log_path': 'logs', 'cache_selected_only': 'False', 'profiles_dir': '/Users/shahanahmed/.dbt', 'version_check': 'True', 'static_parser': 'True', 'no_print': 'None', 'introspect': 'True', 'fail_fast': 'False', 'indirect_selection': 'eager', 'log_format': 'default', 'warn_error': 'None', 'invocation_command': 'dbt debug', 'target_path': 'None'}
+[0m16:39:45.772115 [info ] [MainThread]: dbt version: 1.11.8
+[0m16:39:45.772465 [info ] [MainThread]: python version: 3.12.4
+[0m16:39:45.772673 [info ] [MainThread]: python path: /Users/shahanahmed/Desktop/tutorful_task/.venv/bin/python3.12
+[0m16:39:45.772896 [info ] [MainThread]: os info: macOS-14.5-arm64-arm-64bit
+[0m16:39:46.293949 [info ] [MainThread]: Using profiles dir at /Users/shahanahmed/.dbt
+[0m16:39:46.294215 [info ] [MainThread]: Using profiles.yml file at /Users/shahanahmed/.dbt/profiles.yml
+[0m16:39:46.294364 [info ] [MainThread]: Using dbt_project.yml file at /Users/shahanahmed/Desktop/tutorful_task/dbt_project.yml
+[0m16:39:46.294495 [info ] [MainThread]: adapter type: bigquery
+[0m16:39:46.294621 [info ] [MainThread]: adapter version: 1.11.1
+[0m16:39:46.294750 [info ] [MainThread]: Configuration:
+[0m16:39:46.294867 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m16:39:46.294984 [info ] [MainThread]:   dbt_project.yml file [[31mERROR not found[0m]
+[0m16:39:46.295099 [info ] [MainThread]: Required dependencies:
+[0m16:39:46.295267 [debug] [MainThread]: Executing "git --help"
+[0m16:39:46.310593 [debug] [MainThread]: STDOUT: "b"usage: git [--version] [--help] [-C <path>] [-c name=value]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | --no-pager] [--no-replace-objects] [--bare]\n           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone      Clone a repository into a new directory\n   init       Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add        Add file contents to the index\n   mv         Move or rename a file, a directory, or a symlink\n   reset      Reset current HEAD to the specified state\n   rm         Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect     Use binary search to find the commit that introduced a bug\n   grep       Print lines matching a pattern\n   log        Show commit logs\n   show       Show various types of objects\n   status     Show the working tree status\n\ngrow, mark and tweak your common history\n   branch     List, create, or delete branches\n   checkout   Switch branches or restore working tree files\n   commit     Record changes to the repository\n   diff       Show changes between commits, commit and working tree, etc\n   merge      Join two or more development histories together\n   rebase     Reapply commits on top of another base tip\n   tag        Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch      Download objects and refs from another repository\n   pull       Fetch from and integrate with another repository or a local branch\n   push       Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\n""
+[0m16:39:46.311143 [debug] [MainThread]: STDERR: "b''"
+[0m16:39:46.311346 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m16:39:46.311517 [info ] [MainThread]: Connection:
+[0m16:39:46.311715 [info ] [MainThread]:   method: oauth
+[0m16:39:46.311847 [info ] [MainThread]:   database: tutorful-493614
+[0m16:39:46.311967 [info ] [MainThread]:   execution_project: tutorful-493614
+[0m16:39:46.312087 [info ] [MainThread]:   schema: tutorful_raw
+[0m16:39:46.312217 [info ] [MainThread]:   location: EU
+[0m16:39:46.312335 [info ] [MainThread]:   priority: interactive
+[0m16:39:46.312452 [info ] [MainThread]:   maximum_bytes_billed: None
+[0m16:39:46.312570 [info ] [MainThread]:   impersonate_service_account: None
+[0m16:39:46.312686 [info ] [MainThread]:   job_retry_deadline_seconds: None
+[0m16:39:46.312803 [info ] [MainThread]:   job_retries: 1
+[0m16:39:46.312917 [info ] [MainThread]:   job_creation_timeout_seconds: None
+[0m16:39:46.313035 [info ] [MainThread]:   job_execution_timeout_seconds: 300
+[0m16:39:46.313148 [info ] [MainThread]:   timeout_seconds: 300
+[0m16:39:46.313265 [info ] [MainThread]:   client_id: None
+[0m16:39:46.313377 [info ] [MainThread]:   token_uri: None
+[0m16:39:46.313489 [info ] [MainThread]:   compute_region: None
+[0m16:39:46.313604 [info ] [MainThread]:   dataproc_cluster_name: None
+[0m16:39:46.313719 [info ] [MainThread]:   gcs_bucket: None
+[0m16:39:46.313835 [info ] [MainThread]:   dataproc_batch: None
+[0m16:39:46.314172 [info ] [MainThread]: Registered adapter: bigquery=1.11.1
+[0m16:39:46.414548 [debug] [MainThread]: Acquiring new bigquery connection 'debug'
+[0m16:39:46.414919 [debug] [MainThread]: On debug: select 1 as id
+[0m16:39:46.415130 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m16:39:47.102467 [info ] [MainThread]:   Connection test: [[31mERROR[0m]
+
+[0m16:39:47.103052 [info ] [MainThread]: [31m2 checks failed:[0m
+[0m16:39:47.103300 [info ] [MainThread]: Project loading failed for the following reason:
+ project path </Users/shahanahmed/Desktop/tutorful_task/dbt_project.yml> not found
+
+[0m16:39:47.103525 [info ] [MainThread]: dbt was unable to connect to the specified database.
+The database returned the following error:
+
+  >Database Error
+  Unable to generate access token, if you're using impersonate_service_account, make sure your initial account has the "roles/iam.serviceAccountTokenCreator" role on the account you are trying to impersonate.
+  
+  ('invalid_grant: Bad Request', {'error': 'invalid_grant', 'error_description': 'Bad Request'})
+
+Check your database credentials and try again. For more information, visit:
+https://docs.getdbt.com/docs/configure-your-profile
+
+
+[0m16:39:47.105173 [debug] [MainThread]: Resource report: {"command_name": "debug", "command_success": false, "command_wall_clock_time": 1.3857566, "process_in_blocks": "0", "process_kernel_time": 0.228638, "process_mem_max_rss": "208289792", "process_out_blocks": "0", "process_user_time": 1.109637}
+[0m16:39:47.105557 [debug] [MainThread]: Command `dbt debug` failed at 16:39:47.105484 after 1.39 seconds
+[0m16:39:47.105825 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m16:39:47.106084 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108ded550>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1094636e0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x117c3f980>]}
+[0m16:39:47.106374 [debug] [MainThread]: Flushing usage events
+[0m16:39:47.435689 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m16:44:10.913284 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x105ee9ac0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108ab06b0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108ab03e0>]}
+
+
+============================== 16:44:10.916431 | 49c51ce2-b14e-4150-82a7-9798151040f8 ==============================
+[0m16:44:10.916431 [info ] [MainThread]: Running with dbt=1.11.8
+[0m16:44:10.916747 [debug] [MainThread]: running dbt with arguments {'fail_fast': 'False', 'static_parser': 'True', 'use_colors': 'True', 'cache_selected_only': 'False', 'quiet': 'False', 'use_experimental_parser': 'False', 'partial_parse': 'True', 'indirect_selection': 'eager', 'empty': 'None', 'log_path': 'logs', 'write_json': 'True', 'invocation_command': 'dbt init', 'send_anonymous_usage_stats': 'True', 'log_format': 'default', 'printer_width': '80', 'warn_error': 'None', 'debug': 'False', 'introspect': 'True', 'profiles_dir': '/Users/shahanahmed/.dbt', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'target_path': 'None', 'log_cache_events': 'False', 'version_check': 'True', 'no_print': 'None'}
+[0m16:44:28.498212 [debug] [MainThread]: Starter project path: /Users/shahanahmed/Desktop/tutorful_task/.venv/lib/python3.12/site-packages/dbt/include/starter_project
+[0m16:44:28.511828 [info ] [MainThread]: 
+Your new dbt project "tutorful_staging" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m16:44:28.512559 [info ] [MainThread]: Setting up your profile.
+[0m16:45:04.322194 [info ] [MainThread]: Profile tutorful_staging written to /Users/shahanahmed/.dbt/profiles.yml using target's profile_template.yml and your supplied values. Run 'dbt debug' to validate the connection.
+[0m16:45:04.331394 [debug] [MainThread]: Resource report: {"command_name": "init", "command_success": true, "command_wall_clock_time": 53.454426, "process_in_blocks": "0", "process_kernel_time": 0.250591, "process_mem_max_rss": "198311936", "process_out_blocks": "0", "process_user_time": 1.060749}
+[0m16:45:04.334068 [debug] [MainThread]: Command `dbt init` succeeded at 16:45:04.333860 after 53.46 seconds
+[0m16:45:04.335171 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1159fade0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x11653b050>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108a87dd0>]}
+[0m16:45:04.336018 [debug] [MainThread]: Flushing usage events
+[0m16:45:04.691106 [debug] [MainThread]: An error was encountered while trying to flush usage events
