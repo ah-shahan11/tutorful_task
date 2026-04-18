@@ -1,0 +1,80 @@
+version: 2
+
+models:
+  - name: int_completed_lessons
+    description: "Completed lesson events enriched with student and tutor relationship data."
+    columns:
+      - name: student_id
+        description: "The student attached to the completed lesson event."
+        data_tests:
+          - not_null
+      - name: lesson_id
+        description: "The completed lesson identifier."
+        data_tests:
+          - not_null
+      - name: lesson_finished_at
+        description: "The timestamp used to measure student activity."
+        data_tests:
+          - not_null
+
+  - name: int_student_lesson_gaps
+    description: "Completed lesson events with the previous completed lesson date for each student."
+    columns:
+      - name: student_id
+        description: "The student whose lesson history is being measured."
+        data_tests:
+          - not_null
+      - name: lesson_id
+        description: "The lesson identifier for the current completed lesson."
+        data_tests:
+          - not_null
+      - name: previous_lesson_finished_at
+        description: "The previous completed lesson timestamp for the same student."
+      - name: days_since_previous_completed_lesson
+        description: "The number of days since the student's previous completed lesson."
+
+  - name: fct_student_lifecycle_events
+    description: "Churn and reactivation events for students based on 30 days without a completed lesson."
+    columns:
+      - name: student_id
+        description: "The student who churned or reactivated."
+        data_tests:
+          - not_null
+      - name: event_type
+        description: "The lifecycle event type, either churn or reactivation."
+        data_tests:
+          - not_null
+      - name: event_at
+        description: "The timestamp when the churn or reactivation event occurred."
+        data_tests:
+          - not_null
+
+  - name: mart_churn_monthly
+    description: "Monthly summary of churn and reactivation events."
+    columns:
+      - name: event_month
+        description: "The calendar month containing the lifecycle events."
+        data_tests:
+          - not_null
+      - name: event_type
+        description: "The lifecycle event type for the monthly aggregation."
+        data_tests:
+          - not_null
+      - name: event_count
+        description: "The number of lifecycle events in the month."
+
+  - name: churn_feb2026
+    description: "Churn events occurring in February 2026."
+    columns:
+      - name: student_id
+        description: "The churned student."
+      - name: event_at
+        description: "The churn timestamp in February 2026."
+
+  - name: reactivation_feb2026
+    description: "Reactivation events occurring in February 2026."
+    columns:
+      - name: student_id
+        description: "The reactivated student."
+      - name: event_at
+        description: "The reactivation timestamp in February 2026."

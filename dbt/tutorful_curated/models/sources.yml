@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: staging_data
+    database: "{{env_var('BQ_PROJECT_ID')}}"
+    schema: "{{env_var('BQ_DATASET_ID')}}"
+    tables:
+      - name: bookings
+      - name: lessons
+      - name: relationship
