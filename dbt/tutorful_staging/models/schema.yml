@@ -4,3 +4,6 @@ sources:
    schema: "{{env_var('BQ_DATASET_ID')}}"
    tables:
      - name: bookings
+     - name: lessons
+     - name: relationship
+     - name: subjects
