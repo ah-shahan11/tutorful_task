@@ -1,0 +1,41 @@
+tutorful_raw:
+  outputs:
+    dev:
+      type: bigquery
+      method: oauth
+      project: "{{ env_var('DBT_GCP_PROJECT', 'tutorful-493614') }}"
+      dataset: "{{ env_var('DBT_RAW_DATASET', 'tutorful_raw') }}"
+      location: "{{ env_var('DBT_BQ_LOCATION', 'europe-west2') }}"
+      threads: 1
+      job_execution_timeout_seconds: 300
+      job_retries: 1
+      priority: interactive
+  target: dev
+
+tutorful_staging:
+  outputs:
+    dev:
+      type: bigquery
+      method: oauth
+      project: "{{ env_var('DBT_GCP_PROJECT', 'tutorful-493614') }}"
+      dataset: "{{ env_var('DBT_STAGING_DATASET', 'tutorful_staging') }}"
+      location: "{{ env_var('DBT_BQ_LOCATION', 'europe-west2') }}"
+      threads: 1
+      job_execution_timeout_seconds: 300
+      job_retries: 1
+      priority: interactive
+  target: dev
+
+tutorful_curated:
+  outputs:
+    dev:
+      type: bigquery
+      method: oauth
+      project: "{{ env_var('DBT_GCP_PROJECT', 'tutorful-493614') }}"
+      dataset: "{{ env_var('DBT_CURATED_DATASET', 'tutorful_curated') }}"
+      location: "{{ env_var('DBT_BQ_LOCATION', 'europe-west2') }}"
+      threads: 1
+      job_execution_timeout_seconds: 300
+      job_retries: 1
+      priority: interactive
+  target: dev

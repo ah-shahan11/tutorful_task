@@ -124,9 +124,21 @@ That last command helps avoid quota-project warnings when dbt connects through A
 
 The repo currently uses separate dbt profiles for each layer.
 
+A real `profiles.yml` is not committed to the repository because dbt profiles are usually user-specific.
+Instead, the repo includes an example profile file at [`dbt/profiles.example.yml`](/Users/shahanahmed/Desktop/tutorful_task/dbt/profiles.example.yml).
+
+To set up dbt profiles on a new machine:
+
+```bash
+mkdir -p ~/.dbt
+cp dbt/profiles.example.yml ~/.dbt/profiles.yml
+```
+
+The example profile uses environment variables with sensible defaults, so it can be customised without editing the file directly.
+
 ### Raw profile
 
-The raw project uses the `tutorful_raw` profile and is intended to seed CSV data into a BigQuery dataset such as `tutorful_seed`.
+The raw project uses the `tutorful_raw` profile and is intended to seed CSV data into a BigQuery raw dataset.
 
 ### Staging profile
 
@@ -138,9 +150,31 @@ The curated project uses the `tutorful_curated` profile and reads from the stagi
 
 ## Environment Variables
 
-The staging and curated source configuration uses environment variables for project and dataset names.
+The repo uses two groups of environment variables:
 
-Common variables used in this repo:
+### Profile environment variables
+
+These are used by [`dbt/profiles.example.yml`](/Users/shahanahmed/Desktop/tutorful_task/dbt/profiles.example.yml):
+
+- `DBT_GCP_PROJECT`
+- `DBT_RAW_DATASET`
+- `DBT_STAGING_DATASET`
+- `DBT_CURATED_DATASET`
+- `DBT_BQ_LOCATION`
+
+Example:
+
+```bash
+export DBT_GCP_PROJECT="tutorful-493614"
+export DBT_RAW_DATASET="tutorful_raw"
+export DBT_STAGING_DATASET="tutorful_staging"
+export DBT_CURATED_DATASET="tutorful_curated"
+export DBT_BQ_LOCATION="europe-west2"
+```
+
+### Project source environment variables
+
+The staging and curated source configuration also uses:
 
 - `BQ_PROJECT_ID`
 - `BQ_DATASET_ID`
