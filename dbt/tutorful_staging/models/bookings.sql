@@ -4,8 +4,8 @@
 ) }}
 
 -- Standardises raw booking records and parses the lesson timestamps into BigQuery timestamps.
-SELECT booking_id                   as booking_id,
-       lesson_id                    as lesson_id,
+SELECT CAST(booking_id AS INT64)                   as booking_id,
+       CAST(lesson_id AS INT64)                    as lesson_id,
        PARSE_TIMESTAMP('%d/%m/%Y %H:%M', start_at)  as start_at,
        PARSE_TIMESTAMP('%d/%m/%Y %H:%M', finish_at) as finish_at,
        status                       as status

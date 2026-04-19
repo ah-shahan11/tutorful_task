@@ -4,7 +4,7 @@
 ) }}
 
 -- Stages the subject hierarchy and safely casts the tree position columns to integers.
-SELECT subject_id                       as subject_id,
+SELECT CAST(subject_id AS INT64)        as subject_id,
        subject_name                     as subject_name,
        CAST(`left` AS INT64)            as `left`,
        CAST(`right` AS INT64)           as `right`,

@@ -4,7 +4,7 @@
 ) }}
 
 -- Brings raw lesson identifiers into the staging layer at one row per lesson-to-relationship mapping.
-SELECT lesson_id                    as lesson_id,
-       relationship_id              as relationship_id,
-       subject_id                   as subject_id,
+SELECT CAST(lesson_id AS INT64)                    as lesson_id,
+       CAST(relationship_id AS INT64)              as relationship_id,
+       CAST(subject_id AS INT64)                   as subject_id
 FROM {{ source('raw_data', 'lessons') }}  
