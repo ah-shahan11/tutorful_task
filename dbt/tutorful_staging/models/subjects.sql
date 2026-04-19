@@ -3,6 +3,7 @@
     unique_key=['subject_id', 'subject_name', 'left', 'right', 'roll_up_to']
 ) }}
 
+-- Stages the subject hierarchy and safely casts the tree position columns to integers.
 SELECT subject_id                       as subject_id,
        subject_name                     as subject_name,
        CAST(`left` AS INT64)            as `left`,

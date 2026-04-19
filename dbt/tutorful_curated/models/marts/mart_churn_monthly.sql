@@ -1,5 +1,9 @@
-{{ config(materialized='table') }}
+{{ config(
+    materialized='incremental',
+    unique_key=['event_month', 'event_type']
+) }}
 
+-- Aggregates lifecycle events into monthly churn and reactivation counts.
 select
     date_trunc(date(event_at), month) as event_month,
     event_type,

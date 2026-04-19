@@ -1,10 +1,15 @@
-{{ config(materialized='table') }}
+{{ config(
+    materialized='incremental',
+    unique_key=['student_id', 'anchor_lesson_id', 'event_type', 'event_at']
+) }}
 
+-- Produces the reusable lifecycle event table containing churn and reactivation events per student.
 with student_lesson_gaps as (
     select *
     from {{ ref('int_student_lesson_gaps') }}
 ),
 reactivation_events as (
+    -- A reactivation happens when a completed lesson follows a gap of 30 days or more.
     select
         student_id,
         relationship_id,
@@ -20,6 +25,7 @@ reactivation_events as (
     where days_since_previous_completed_lesson >= 30
 ),
 churn_events_between_lessons as (
+    -- A churn is recorded 30 days after the previous completed lesson if the next lesson arrives after that threshold.
     select
         student_id,
         relationship_id,
@@ -36,6 +42,7 @@ churn_events_between_lessons as (
       and previous_lesson_finished_at is not null
 ),
 latest_completed_lesson as (
+    -- Keep the latest completed lesson per student to identify students currently in an open churn period.
     select
         student_id,
         relationship_id,
@@ -50,6 +57,7 @@ latest_completed_lesson as (
     from student_lesson_gaps
 ),
 open_churn_events as (
+    -- If no new lesson arrives, emit a churn event once 30 days have passed since the latest completed lesson.
     select
         student_id,
         relationship_id,

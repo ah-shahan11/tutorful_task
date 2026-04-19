@@ -1,5 +1,9 @@
-{{ config(materialized='table') }}
+{{ config(
+    materialized='incremental',
+    unique_key=['booking_id', 'lesson_id', 'lesson_start_at', 'lesson_finished_at']
+) }}
 
+-- Builds the base student activity set by keeping only completed lessons with student context attached.
 select
     r.student_id as student_id,
     r.relationship_id as relationship_id,

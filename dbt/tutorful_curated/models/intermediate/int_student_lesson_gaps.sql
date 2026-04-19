@@ -1,10 +1,15 @@
-{{ config(materialized='table') }}
+{{ config(
+    materialized='incremental',
+    unique_key=['student_id', 'lesson_id', 'booking_id', 'lesson_start_at', 'lesson_finished_at']
+) }}
 
+-- Calculates the gap between each student's completed lessons so churn and reactivation can be identified.
 with completed_lessons as (
     select *
     from {{ ref('int_completed_lessons') }}
 ),
 ordered_lessons as (
+    -- Order lessons per student so the previous completed lesson can be compared to the current one.
     select
         student_id,
         relationship_id,

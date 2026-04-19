@@ -1,5 +1,9 @@
-{{ config(materialized='table') }}
+{{ config(
+    materialized='incremental',
+    unique_key=['student_id', 'anchor_lesson_id', 'event_type', 'event_at']
+) }}
 
+-- Filters the lifecycle event fact table down to reactivation events that occur in February 2026.
 select
     student_id,
     relationship_id,

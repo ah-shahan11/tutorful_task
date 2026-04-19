@@ -32,6 +32,7 @@ clean-targets:         # directories to be removed by `dbt clean`
 models:
   tutorful_curated:
     intermediate:
-      +materialized: table
+      +materialized: incremental
     marts:
-      +materialized: table
+      +materialized: incremental
+    +materialized: incremental

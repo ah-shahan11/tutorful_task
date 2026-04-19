@@ -9,6 +9,7 @@
 
 {{ config(materialized='table') }}
 
+-- Example starter model included by dbt; it creates a tiny sample dataset for learning purposes.
 with source_data as (
 
     select 1 as id
