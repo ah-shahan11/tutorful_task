@@ -2,9 +2,10 @@
 
 This repository contains a small dbt-based analytics workflow on BigQuery.
 
-It is organised into two main transformation layers:
+It is organised into three dbt layers:
 
-- `dbt/tutorful_staging`: cleans and standardises raw operational data
+- `dbt/tutorful_raw`: ingests CSV data into BigQuery using `dbt seed`
+- `dbt/tutorful_staging`: cleans and standardises the seeded raw tables
 - `dbt/tutorful_curated`: builds business-facing churn and reactivation models from the staged data
 
 The project context is student lesson activity.
@@ -27,9 +28,24 @@ A student can churn, reactivate, and churn again, so the lifecycle event models 
 └── README.md
 ```
 
+### `dbt/tutorful_raw`
+
+This project is mainly used to ingest CSV files into BigQuery with `dbt seed`.
+
+Current seed files:
+
+- `bookings.csv`
+- `lessons.csv`
+- `relationship.csv`
+- `subjects.csv`
+
+These CSV files are stored in [`dbt/tutorful_raw/seeds/`](/Users/shahanahmed/Desktop/tutorful_task/dbt/tutorful_raw/seeds).
+
+The raw project is useful for loading test or sample data into a BigQuery dataset without needing a separate ingestion tool.
+
 ### `dbt/tutorful_staging`
 
-This project reads from raw BigQuery source tables and builds cleaned staging tables.
+This project reads from the raw BigQuery tables and builds cleaned staging tables.
 
 Current staging models:
 
@@ -41,6 +57,7 @@ Current staging models:
 Notable staging logic:
 
 - parses booking timestamps from strings like `01/01/2025 05:00`
+- casts seeded raw string columns into the appropriate BigQuery types
 - uses incremental materialisations where appropriate
 - defines unique keys to avoid appending duplicate rows across runs
 
@@ -70,14 +87,14 @@ What each model does:
 
 The intended flow is:
 
-1. Raw data exists in a BigQuery raw dataset
+1. CSV files are loaded into BigQuery using `dbt seed` in `tutorful_raw`
 2. `tutorful_staging` builds cleaned tables in a staging dataset
 3. `tutorful_curated` reads those staging tables and builds analytics tables in a curated dataset
 
 Conceptually:
 
 ```text
-raw dataset -> staging dataset -> curated dataset
+CSV files -> raw seed dataset -> staging dataset -> curated dataset
 ```
 
 ## BigQuery / dbt Setup
@@ -103,9 +120,25 @@ gcloud auth application-default set-quota-project tutorful-493614
 
 That last command helps avoid quota-project warnings when dbt connects through ADC credentials.
 
+## Profiles and Datasets
+
+The repo currently uses separate dbt profiles for each layer.
+
+### Raw profile
+
+The raw project uses the `tutorful_raw` profile and is intended to seed CSV data into a BigQuery dataset such as `tutorful_seed`.
+
+### Staging profile
+
+The staging project uses the `tutorful_staging` profile and reads from the raw dataset.
+
+### Curated profile
+
+The curated project uses the `tutorful_curated` profile and reads from the staging dataset.
+
 ## Environment Variables
 
-The dbt source configuration uses environment variables for project and dataset names.
+The staging and curated source configuration uses environment variables for project and dataset names.
 
 Common variables used in this repo:
 
@@ -123,7 +156,7 @@ export BQ_PROJECT_ID="tutorful-493614"
 export BQ_DATASET_ID="tutorful_raw"
 ```
 
-This means the staging project reads from the raw dataset.
+This means the staging project reads from the raw dataset configured in the script.
 
 ### Curated setup
 
@@ -146,25 +179,73 @@ From the repository root:
 source .venv/bin/activate
 ```
 
-### 2. Run the staging project
+### 2. Run the full pipeline
+
+The simplest way to run everything end to end is:
 
 ```bash
-cd dbt/tutorful_staging
+bash dbt/run_pipeline.sh
+```
+
+This script runs the full pipeline in order:
+
+1. seeds the raw CSV data in `tutorful_raw`
+2. runs the staging models in `tutorful_staging`
+3. runs the curated models in `tutorful_curated`
+4. prints the February 2026 churn and reactivation summary
+
+At the end of the pipeline run, the script prints:
+
+- total churn events in February 2026
+- total reactivation events in February 2026
+- daily churn and reactivation volumes for February 2026
+
+If you need to rebuild all incremental models and seeds from scratch, use:
+
+```bash
+bash dbt/run_pipeline.sh --full-refresh
+```
+
+### 3. Run each layer manually
+
+If you want to run the layers one by one instead, use the following steps.
+
+#### Seed the raw CSV data
+
+```bash
+cd dbt/tutorful_raw
+dbt debug
+dbt seed --show
+```
+
+This loads the CSV files in `seeds/` into the dataset configured by the `tutorful_raw` profile.
+
+#### Run the staging project
+
+```bash
+cd ../tutorful_staging
 source setup.sh
 bash project_run.sh
 ```
 
-This will:
+If the schema has changed since the last run, use:
 
-- install dbt packages if needed via `dbt deps`
-- run the staging models via `dbt run`
+```bash
+dbt run --full-refresh
+```
 
-### 3. Run the curated project
+#### Run the curated project
 
 ```bash
 cd ../tutorful_curated
 source setup.sh
 bash project_run.sh
+```
+
+If the schema has changed since the last run, use:
+
+```bash
+dbt run --full-refresh
 ```
 
 This builds the churn/reactivation models on top of staging.
@@ -190,6 +271,12 @@ Run tests:
 
 ```bash
 dbt test
+```
+
+Reload seeds cleanly:
+
+```bash
+dbt seed --full-refresh --show
 ```
 
 ## Key Outputs
@@ -226,9 +313,11 @@ Current curated logic assumes:
 
 ## Notes
 
-- Some models are intentionally materialised as tables so the outputs are persisted in BigQuery
-- The `sim_data/` directory contains local sample files, but the dbt projects currently read from BigQuery sources
-- If dataset or project names change, update the shell scripts or exported environment variables before running dbt
+- Some models are intentionally materialised as incremental tables so the outputs are persisted in BigQuery
+- The `tutorful_raw` project is now primarily an ingestion layer for CSV seeds
+- If seed columns are inferred as strings in BigQuery, the staging models handle the type casting
+- If dataset or project names change, update the relevant profile or shell scripts before running dbt
+- BigQuery dataset location must match the profile location used by dbt
 
 ## Next Improvements
 
@@ -237,4 +326,4 @@ Potential follow-up improvements for this repo:
 1. add more dbt tests for lifecycle event quality
 2. parameterise month-specific models instead of hard-coding February 2026
 3. add Terraform to manage BigQuery datasets and tables consistently
-4. add a documented raw ingestion step if CSV files in `sim_data/` should be loaded automatically
+4. document the expected dataset locations and profile settings more explicitly
