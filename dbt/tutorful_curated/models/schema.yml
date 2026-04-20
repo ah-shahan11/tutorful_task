@@ -49,6 +49,114 @@ models:
         data_tests:
           - not_null
 
+  - name: int_student_tenure_events
+    description: "Lifecycle events enriched with student tenure and a new versus established segment."
+    columns:
+      - name: student_id
+        description: "The student tied to the lifecycle event."
+        data_tests:
+          - not_null
+      - name: event_type
+        description: "The lifecycle event type."
+        data_tests:
+          - not_null
+      - name: student_tenure_segment
+        description: "The student cohort at event time, using a default threshold of under 90 days for new students."
+        data_tests:
+          - not_null
+
+  - name: mart_lifecycle_by_subject_monthly
+    description: "Monthly churn and reactivation volumes by subject."
+    columns:
+      - name: event_month
+        description: "The calendar month containing the lifecycle events."
+        data_tests:
+          - not_null
+      - name: event_type
+        description: "The lifecycle event type."
+        data_tests:
+          - not_null
+      - name: subject_id
+        description: "The subject attached to the lifecycle event."
+        data_tests:
+          - not_null
+
+  - name: mart_lifecycle_by_subject_feb2026
+    description: "February 2026 churn and reactivation volumes by subject, including event rank within each event type."
+    columns:
+      - name: subject_id
+        description: "The subject attached to the lifecycle event."
+        data_tests:
+          - not_null
+      - name: event_type
+        description: "The lifecycle event type."
+        data_tests:
+          - not_null
+      - name: event_rank
+        description: "The rank of the subject within the event type by event volume."
+        data_tests:
+          - not_null
+
+  - name: mart_lifecycle_by_tutor_monthly
+    description: "Monthly churn and reactivation volumes by tutor."
+    columns:
+      - name: event_month
+        description: "The calendar month containing the lifecycle events."
+        data_tests:
+          - not_null
+      - name: event_type
+        description: "The lifecycle event type."
+        data_tests:
+          - not_null
+      - name: tutor_id
+        description: "The tutor attached to the lifecycle event."
+        data_tests:
+          - not_null
+
+  - name: mart_lifecycle_by_tutor_feb2026
+    description: "February 2026 churn and reactivation volumes by tutor, including event rank within each event type."
+    columns:
+      - name: tutor_id
+        description: "The tutor attached to the lifecycle event."
+        data_tests:
+          - not_null
+      - name: event_type
+        description: "The lifecycle event type."
+        data_tests:
+          - not_null
+      - name: event_rank
+        description: "The rank of the tutor within the event type by event volume."
+        data_tests:
+          - not_null
+
+  - name: mart_lifecycle_by_tenure_monthly
+    description: "Monthly churn and reactivation volumes by student tenure segment."
+    columns:
+      - name: event_month
+        description: "The calendar month containing the lifecycle events."
+        data_tests:
+          - not_null
+      - name: event_type
+        description: "The lifecycle event type."
+        data_tests:
+          - not_null
+      - name: student_tenure_segment
+        description: "The event cohort, split into new and established students."
+        data_tests:
+          - not_null
+
+  - name: mart_lifecycle_by_tenure_feb2026
+    description: "February 2026 churn and reactivation volumes by student tenure segment."
+    columns:
+      - name: student_tenure_segment
+        description: "The event cohort, split into new and established students."
+        data_tests:
+          - not_null
+      - name: event_type
+        description: "The lifecycle event type."
+        data_tests:
+          - not_null
+
   - name: mart_churn_monthly
     description: "Monthly summary of churn and reactivation events."
     columns:

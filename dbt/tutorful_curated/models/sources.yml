@@ -8,3 +8,4 @@ sources:
       - name: bookings
       - name: lessons
       - name: relationship
+      - name: subjects

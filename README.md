@@ -6,7 +6,7 @@ It is organised into three dbt layers:
 
 - `dbt/tutorful_raw`: ingests CSV data into BigQuery using `dbt seed`
 - `dbt/tutorful_staging`: cleans and standardises the seeded raw tables
-- `dbt/tutorful_curated`: builds business-facing churn and reactivation models from the staged data
+- `dbt/tutorful_curated`: builds business-facing churn, reactivation, and retention analysis models from the staged data
 
 The project context is student lesson activity.
 The main business definitions used in the curated layer are:
@@ -24,6 +24,7 @@ A student can churn, reactivate, and churn again, so the lifecycle event models 
 │   ├── tutorful_raw/
 │   ├── tutorful_staging/
 │   └── tutorful_curated/
+├── presentation/
 ├── sim_data/
 └── README.md
 ```
@@ -63,25 +64,41 @@ Notable staging logic:
 
 ### `dbt/tutorful_curated`
 
-This project reads from the staging dataset and produces churn/reactivation outputs.
+This project reads from the staging dataset and produces churn/reactivation outputs plus broader retention analysis.
 
 Current curated models:
 
+Intermediate models:
+
 - `int_completed_lessons`
 - `int_student_lesson_gaps`
+- `int_student_tenure_events`
+
+Core lifecycle marts:
+
 - `fct_student_lifecycle_events`
 - `mart_churn_monthly`
 - `churn_feb2026`
 - `reactivation_feb2026`
+
+Extended retention marts:
+
+- `mart_lifecycle_by_subject_monthly`
+- `mart_lifecycle_by_tutor_monthly`
+- `mart_lifecycle_by_tenure_monthly`
 
 What each model does:
 
 - `int_completed_lessons`: joins bookings, lessons, and relationship, then filters to completed lessons
 - `int_student_lesson_gaps`: calculates the gap since the previous completed lesson for each student
 - `fct_student_lifecycle_events`: creates `churn` and `reactivation` lifecycle events
+- `int_student_tenure_events`: enriches lifecycle events with student tenure and a new versus established segment
 - `mart_churn_monthly`: monthly summary of lifecycle events
 - `churn_feb2026`: churn events occurring in February 2026
 - `reactivation_feb2026`: reactivation events occurring in February 2026
+- `mart_lifecycle_by_subject_monthly`: monthly churn/reactivation by subject
+- `mart_lifecycle_by_tutor_monthly`: monthly churn/reactivation by tutor
+- `mart_lifecycle_by_tenure_monthly`: monthly churn/reactivation by student tenure segment
 
 ## Data Flow
 
@@ -282,7 +299,7 @@ If the schema has changed since the last run, use:
 dbt run --full-refresh
 ```
 
-This builds the churn/reactivation models on top of staging.
+This builds the churn/reactivation and extended retention models on top of staging.
 
 ## Useful dbt Commands
 
@@ -293,6 +310,9 @@ dbt run -s bookings
 dbt run -s fct_student_lifecycle_events
 dbt run -s churn_feb2026
 dbt run -s reactivation_feb2026
+dbt run -s mart_lifecycle_by_subject_monthly
+dbt run -s mart_lifecycle_by_tutor_monthly
+dbt run -s mart_lifecycle_by_tenure_monthly
 ```
 
 Parse the project without running models:
@@ -317,10 +337,18 @@ dbt seed --full-refresh --show
 
 Important curated tables include:
 
+Core lifecycle outputs:
+
 - `tutorful_curated.fct_student_lifecycle_events`
 - `tutorful_curated.mart_churn_monthly`
 - `tutorful_curated.churn_feb2026`
 - `tutorful_curated.reactivation_feb2026`
+
+Extended retention outputs:
+
+- `tutorful_curated.mart_lifecycle_by_subject_monthly`
+- `tutorful_curated.mart_lifecycle_by_tutor_monthly`
+- `tutorful_curated.mart_lifecycle_by_tenure_monthly`
 
 ### Which table answers which question?
 
@@ -336,6 +364,19 @@ For the reusable all-time event history:
 
 - `tutorful_curated.fct_student_lifecycle_events`
 
+For churn/reactivation by subject:
+
+- `tutorful_curated.mart_lifecycle_by_subject_monthly`
+
+For churn/reactivation by tutor:
+
+- `tutorful_curated.mart_lifecycle_by_tutor_monthly`
+
+For churn/reactivation by student tenure and new versus established cohorts:
+
+- `tutorful_curated.int_student_tenure_events`
+- `tutorful_curated.mart_lifecycle_by_tenure_monthly`
+
 ## Assumptions
 
 Current curated logic assumes:
@@ -344,6 +385,22 @@ Current curated logic assumes:
 - the activity timestamp is `finish_at`
 - churn/reactivation is measured at the `student_id` level
 - students can have multiple churn/reactivation events over time
+- the default tenure segment is:
+  - `new` if the event occurs within 90 days of the student's first completed lesson
+  - `established` otherwise
+
+## Presentation Output
+
+A presentation summarising the work and business findings is stored at:
+
+- [tutorful_feb2026_business_summary.pptx](/Users/shahanahmed/Desktop/tutorful_task/presentation/tutorful_feb2026_business_summary.pptx)
+
+The presentation currently includes:
+
+- the dbt pipeline approach
+- the February 2026 churn and reactivation headline results
+- additional retention insights by subject, tutor, and student tenure
+- suggested business actions based on those outputs
 
 ## Notes
 
@@ -352,6 +409,7 @@ Current curated logic assumes:
 - If seed columns are inferred as strings in BigQuery, the staging models handle the type casting
 - If dataset or project names change, update the relevant profile or shell scripts before running dbt
 - BigQuery dataset location must match the profile location used by dbt
+- Subject-level analysis may benefit from an additional roll-up if the business wants parent-subject rather than leaf-subject reporting
 
 ## Next Improvements
 
@@ -360,4 +418,5 @@ Potential follow-up improvements for this repo:
 1. add more dbt tests for lifecycle event quality
 2. parameterise month-specific models instead of hard-coding February 2026
 3. add Terraform to manage BigQuery datasets and tables consistently
-4. document the expected dataset locations and profile settings more explicitly
+4. add parent-subject roll-up logic for cleaner subject-level analysis
+5. extend retention reporting to intervention lists or predictive modelling inputs
